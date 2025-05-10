@@ -54,7 +54,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('criteria.edit', $criteria) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('criteria.edit',  $criteria) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     

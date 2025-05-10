@@ -14,7 +14,7 @@
     <style>
         .sidebar {
             min-height: calc(100vh - 56px);
-            background-color: #343a40;
+            background-color:rgb(121, 82, 179);
         }
         
         .sidebar .nav-link {
@@ -63,9 +63,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-light-800 bg-light shadow-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('dashboard') }}">
+                <a class="navbar-brand font-weight-bold" href="{{ route('dashboard') }}">
                     <i class="fas fa-utensils me-2"></i>
                     SPK Delivery Food
                 </a>

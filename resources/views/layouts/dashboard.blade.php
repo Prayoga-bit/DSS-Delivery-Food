@@ -19,7 +19,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $criteriaCount }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-list-ul fa-2x text-gray-300"></i>
+                            <i class="fas fa-list-ul fa-2x text-gray-300" style="color:blue"></i>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $alternativeCount }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-archive fa-2x text-gray-300"></i>
+                            <i class="fas fa-archive fa-2x text-gray-300" style="color:green"></i>
                         </div>
                     </div>
                 </div>
