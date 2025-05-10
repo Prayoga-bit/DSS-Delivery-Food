@@ -56,13 +56,17 @@
                                         @foreach($criterias as $criteria)
                                             <td>
                                                 <input 
-                                                    type="number" 
+                                                type="number" 
                                                     class="form-control" 
                                                     name="scores[{{ $alternative->id }}][{{ $criteria->id }}]" 
                                                     value="{{ $scores[$alternative->id][$criteria->id] ?? '' }}"
                                                     step="0.01"
                                                     min="0"
+                                                    @if(!$criteria->is_cost)
                                                     max="100"
+                                                    @else
+                                                    max="1000000"
+                                                    @endif
                                                     required
                                                 >
                                             </td>

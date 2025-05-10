@@ -29,7 +29,7 @@
                             <th>Keterangan</th>
                             <th>Jenis</th>
                             <th>Bobot</th>
-                            <th>Aksi</th>
+                            <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -53,12 +53,12 @@
                                         <span class="text-muted">Belum dihitung</span>
                                     @endif
                                 </td>
-                                <td>
+                                <!--<td>
                                     <a href="{{ route('criteria.edit',  $criteria) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     
-                                    <!-- Comment out delete button since criteria are fixed -->
+                                    <-- Comment out delete button since criteria are fixed -->
                                     <!--
                                     <form action="{{ route('criteria.destroy', $criteria) }}" method="POST" class="d-inline">
                                         @csrf
@@ -67,8 +67,8 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                    -->
-                                </td>
+                                    --
+                                </td> -->
                             </tr>
                         @empty
                             <tr>

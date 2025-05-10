@@ -7,6 +7,7 @@ use App\Models\AlternativeScore;
 use App\Models\Criteria;
 use App\Models\Result;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class TOPSISService
@@ -214,27 +215,21 @@ class TOPSISService
         $alternatives = $data['alternatives'];
         $criterias = $data['criterias'];
         
-        // Step 2: Normalize the decision matrix
+        // Steps 2-6: Your existing calculation code
         $normalizedMatrix = $this->normalizeMatrix($matrix);
-        
-        // Step 3: Calculate weighted normalized matrix
         $weightedMatrix = $this->calculateWeightedMatrix($normalizedMatrix, $criterias);
-        
-        // Step 4: Find ideal solutions
         $idealSolutions = $this->findIdealSolutions($weightedMatrix, $criterias);
-        
-        // Step 5: Calculate separation measures
         $separationMeasures = $this->calculateSeparationMeasures($weightedMatrix, $idealSolutions);
-        
-        // Step 6: Calculate preference values
         $preferenceData = $this->calculatePreferenceValues($separationMeasures, $alternatives);
         
-        // Save results to database
+        // Step 7: Save results to database with proper transaction handling
         $now = Carbon::now();
         
-        DB::transaction(function () use ($alternatives, $separationMeasures, $preferenceData, $now) {
-            // Clear previous results
-            Result::truncate();
+        try {
+            DB::beginTransaction();
+            
+            // Use delete instead of truncate to avoid potential issues
+            Result::query()->delete();
             
             // Save new results
             foreach ($alternatives as $i => $alternative) {
@@ -247,8 +242,15 @@ class TOPSISService
                     'calculated_at' => $now
                 ]);
             }
-        });
+            
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('TOPSIS calculation error: ' . $e->getMessage());
+            throw $e;
+        }
         
+        // Return calculation results
         return [
             'alternatives' => $alternatives,
             'criterias' => $criterias,
@@ -261,4 +263,59 @@ class TOPSISService
             'ranking' => $preferenceData['ranking']
         ];
     }
+    // public function calculate()
+    // {
+    //     // Step 1: Get decision matrix
+    //     $data = $this->getDecisionMatrix();
+    //     $matrix = $data['matrix'];
+    //     $alternatives = $data['alternatives'];
+    //     $criterias = $data['criterias'];
+        
+    //     // Step 2: Normalize the decision matrix
+    //     $normalizedMatrix = $this->normalizeMatrix($matrix);
+        
+    //     // Step 3: Calculate weighted normalized matrix
+    //     $weightedMatrix = $this->calculateWeightedMatrix($normalizedMatrix, $criterias);
+        
+    //     // Step 4: Find ideal solutions
+    //     $idealSolutions = $this->findIdealSolutions($weightedMatrix, $criterias);
+        
+    //     // Step 5: Calculate separation measures
+    //     $separationMeasures = $this->calculateSeparationMeasures($weightedMatrix, $idealSolutions);
+        
+    //     // Step 6: Calculate preference values
+    //     $preferenceData = $this->calculatePreferenceValues($separationMeasures, $alternatives);
+        
+    //     // Save results to database
+    //     $now = Carbon::now();
+        
+    //     DB::transaction(function () use ($alternatives, $separationMeasures, $preferenceData, $now) {
+    //         // Clear previous results
+    //         Result::truncate();
+            
+    //         // Save new results
+    //         foreach ($alternatives as $i => $alternative) {
+    //             Result::create([
+    //                 'alternative_id' => $alternative->id,
+    //                 'positive_distance' => $separationMeasures['positive'][$i],
+    //                 'negative_distance' => $separationMeasures['negative'][$i],
+    //                 'preference_value' => $preferenceData['preference_values'][$i],
+    //                 'rank' => $preferenceData['ranking'][$i],
+    //                 'calculated_at' => $now
+    //             ]);
+    //         }
+    //     });
+        
+    //     return [
+    //         'alternatives' => $alternatives,
+    //         'criterias' => $criterias,
+    //         'matrix' => $matrix,
+    //         'normalized_matrix' => $normalizedMatrix,
+    //         'weighted_matrix' => $weightedMatrix,
+    //         'ideal_solutions' => $idealSolutions,
+    //         'separation_measures' => $separationMeasures,
+    //         'preference_values' => $preferenceData['preference_values'],
+    //         'ranking' => $preferenceData['ranking']
+    //     ];
+    // }
 }
