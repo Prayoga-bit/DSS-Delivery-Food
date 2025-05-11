@@ -63,6 +63,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Load code
 <p>xampp/htdocs/</p>
+<p>run xampp apache, mysql</p>
 
 ## Run the migrations
 <code>PHP artisan migrate</code>
