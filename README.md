@@ -60,3 +60,15 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # DSS Delivery Food with AHP and TOPSIS
+
+## Load code
+<p>xampp/htdocs/</p>
+
+## Run the migrations
+<code>PHP artisan migrate</code>
+
+## Run the db seed
+<code>PHP artisan db:seed</code>
+
+## Run the server
+<code>PHP artisan serve</code>
